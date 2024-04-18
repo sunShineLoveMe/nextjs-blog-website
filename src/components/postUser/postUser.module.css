@@ -1,7 +1,7 @@
 .container {
     display: flex;
     flex-direction: column;
-    gap: 10px;
+    gap: 20px;
 }
 
 .title {
@@ -12,3 +12,16 @@
 .username {
     font-weight: 500;
 }
+
+.texts {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.avatar {
+    object-fit: cover;
+    border-radius: 50%;
+}
+
+

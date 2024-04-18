@@ -1,6 +1,7 @@
 import { connectToDb } from "./utils";
 import { Post, User } from "./models"; 
 import { TPost, TUser } from "@/types/collections"
+import { unstable_noStore as noStore } from "next/cache";
 
 export const getPosts = async (): Promise<TPost[] | null> => {
     try {
@@ -36,6 +37,7 @@ export const getUsers = async ():Promise<TUser[] | null> => {
 }
 
 export const getUser = async (id: string) :Promise<TUser | null> => {
+    noStore()
     try {
         connectToDb();
         const user = await User.findById(id);
