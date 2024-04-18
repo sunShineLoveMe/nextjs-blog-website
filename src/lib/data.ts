@@ -1,25 +1,47 @@
-import { TPost } from "@/app/blog/page";
+import { connectToDb } from "./utils";
+import { Post, User } from "./models"; 
+import { TPost, TUser } from "@/types/collections"
 
-const users = [
-    {id: 1, name: 'john', username: 'john_doe'},
-    {id: 2, name: 'jane', username: 'jane_doe'},
-]
-
-const posts: TPost[] = [
-    { id: 1, title:'post 1', body: '...', userId: 1},
-    { id: 2, title:'post 2', body: '...', userId: 1},
-    { id: 3, title:'post 3', body: '...', userId: 2},
-    { id: 4, title:'post 4', body: '...', userId: 2},
-]
-
-export const getPosts = async () => {
-    return posts;
+export const getPosts = async (): Promise<TPost[] | null> => {
+    try {
+        connectToDb();
+        const posts = await Post.find();
+        return posts;
+    } catch (error) {
+        console.log(error)
+        throw new Error("failed to fetch posts!")
+    }
 }
 
-export const getPost = async (id: number) => {
-    return posts.find(post => post.id === id);
+export const getPost = async (slug: number): Promise<TPost | null> => {
+    try {
+        connectToDb();
+        const post = await Post.findOne({slug});
+        return post;
+    } catch (error) {
+        console.log(error)
+        throw new Error("failed to fetch post!")
+    }
 }
 
-export const getUser = async (id: number) => {
-    return users.find(user => user.id === id);
+export const getUsers = async ():Promise<TUser[] | null> => {
+    try {
+        connectToDb();
+        const users = await User.find();
+        return users;
+    } catch (error) {
+        console.log(error)
+        throw new Error("failed to fetch users!")
+    }
+}
+
+export const getUser = async (id: string) :Promise<TUser | null> => {
+    try {
+        connectToDb();
+        const user = await User.findById(id);
+        return user;
+    } catch (error) {
+        console.log(error)
+        throw new Error("failed to fetch user!")
+    }
 }

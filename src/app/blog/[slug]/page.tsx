@@ -1,21 +1,12 @@
 import Image from "next/image"
 import styles from "./singlePost.module.css"
-import { TPost } from "../page";
 import PostUser from "@/components/postUser/postUser";
 import { Suspense } from "react";
 import { getPost } from "@/lib/data";
 
-// const getData = async (slug: number) => {
-//     const res = await fetch(`https://jsonplaceholder.typicode.com/posts/${slug}`);
-//     if(!res.ok) {
-//         throw new Error('Failed to fetch data');
-//     }
-//     return res.json();
-// }
-
 const SinglePostPage = async({params}: {params: {slug: number}}) => {
     // const post: TPost = await getData(params.slug);
-    const post: TPost | undefined = await getPost(params.slug);
+    const post = await getPost(params.slug);
 
     return (
         <div className={styles.container}>
@@ -44,7 +35,7 @@ const SinglePostPage = async({params}: {params: {slug: number}}) => {
                     </div>
                 </div>
                 <div className={styles.content}>
-                    {post?.body}
+                    {post?.desc}
                 </div>
             </div>
         </div>
