@@ -1,5 +1,11 @@
+import type { Metadata } from "next";
 import Image from "next/image";
 import styles from "./contact.module.css";
+
+export const metadata: Metadata = {
+  title: "Contract page",
+  description: "contract page description",
+};
 
 const ContactPage: React.FC = () => {
 

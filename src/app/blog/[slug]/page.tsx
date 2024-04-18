@@ -4,6 +4,16 @@ import styles from "./singlePost.module.css"
 import { getPost } from "@/lib/data";
 import { Suspense } from "react";
 
+export const generateMetadata = async({params} : {params: {slug: number}}) => {
+    const { slug } = params;
+    const post = await getPost(slug)
+
+    return {
+        title: post?.title,
+        description: post?.desc
+    }
+}
+
 
 const SinglePostPage = async({params}: {params: {slug: number}}) => {
     const post = await getPost(params.slug);
