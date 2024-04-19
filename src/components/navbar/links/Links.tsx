@@ -36,7 +36,7 @@ const Links = async({session}: {session: Session}) =>{
     // const isAdmin = true
 
     return (
-        <div className={styles.containter}>
+        <div>
             <div className={styles.links}>
                 { links.map((link) => (
                     <NavLink item={link} key={link.title} />

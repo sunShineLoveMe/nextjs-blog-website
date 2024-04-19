@@ -15,11 +15,11 @@ const Home = () => {
           <button className={styles.button}>Contract</button>
         </div>
         <div className={styles.brands}>
-          <Image src="/brands.png" fill alt="" className={styles.brandImg} />
+          <Image src="/brands.png" fill alt="" />
         </div>
       </div>
       <div className={styles.imageContainer}>
-        <Image src="/hero.gif" fill alt="" className={styles.heroImg} />
+        <Image src="/hero.gif" fill alt="" />
       </div>
     </div>
   )
