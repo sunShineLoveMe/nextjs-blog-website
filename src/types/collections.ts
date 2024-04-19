@@ -18,3 +18,10 @@ export interface TUser {
     createdAt?: Date;
 }
 
+export type FormData = {
+    title?: string | null;
+    desc?: string | null;
+    slug: string;
+    userId: string;
+}
+

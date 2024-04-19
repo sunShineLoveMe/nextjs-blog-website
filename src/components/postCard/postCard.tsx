@@ -18,7 +18,7 @@ const PostCard = ({post}: {post: TPost}) => {
           }
           <span className={styles.date}>01.01.2024</span>
       </div>
-      <div className={styles.bottom}>
+      <div>
         <h1 className={styles.title}>{post.title}</h1>
         <p className={styles.desc}>{post.desc}</p>
         <Link className={styles.link} href={`/blog/${post.slug}`}>READ MORE</Link>
