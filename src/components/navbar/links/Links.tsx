@@ -1,9 +1,10 @@
 "use client";
-
 import { useState } from "react"
 import styles from "./links.module.css"
 import NavLink from "./navLink/navLink"
 import Image from "next/image";
+import { handleLogout } from "@/lib/action";
+import { Session } from "next-auth/types";
 
 export type Tlink = {
     title: string,
@@ -29,11 +30,10 @@ const links = [
     }
 ]
 
-const Links = () =>{
+const Links = async({session}: {session: Session}) =>{
 
     const [open, setOpen] = useState<boolean>(false)
-    const session = true
-    const isAdmin = true
+    // const isAdmin = true
 
     return (
         <div className={styles.containter}>
@@ -41,16 +41,16 @@ const Links = () =>{
                 { links.map((link) => (
                     <NavLink item={link} key={link.title} />
                 ))}
-                {
-                    session ? (
+                {session?.user ? (
                         <>
-                            { isAdmin && <NavLink item = { { title: "Admin", path: '/admin' }} />}
-                            <button className={styles.logout}>Logout</button>
+                            { session.user?.isAdmin && <NavLink item = { { title: "Admin", path: '/admin' }} />}
+                            <form action={handleLogout}>
+                                <button className={styles.logout}>Logout</button>
+                            </form>
                         </>
                     ) : (
                         <NavLink item = { { title: "Login", path: '/login' }} />
-                    )
-                }
+                    )}
             </div>
             
             <Image 
