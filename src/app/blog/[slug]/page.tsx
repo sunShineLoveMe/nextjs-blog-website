@@ -3,10 +3,19 @@ import PostUser from "@/components/postUser/postUser";
 import styles from "./singlePost.module.css"
 import { getPost } from "@/lib/data";
 import { Suspense } from "react";
+import { TPost } from "@/types/collections"
 
-export const generateMetadata = async({params} : {params: {slug: number}}) => {
+const getData = async(slug:string): Promise<TPost | null> => {
+    const res = await fetch(`http://localhost:3000/api/blog/${slug}`)
+    if(!res.ok) {
+        throw new Error("Something went wrong")
+    }
+    return res.json()
+}
+
+export const generateMetadata = async({params} : {params: {slug: string}}) => {
     const { slug } = params;
-    const post = await getPost(slug)
+    const post = await getData(slug)
 
     return {
         title: post?.title,
@@ -14,9 +23,9 @@ export const generateMetadata = async({params} : {params: {slug: number}}) => {
     }
 }
 
-
-const SinglePostPage = async({params}: {params: {slug: number}}) => {
-    const post = await getPost(params.slug);
+const SinglePostPage = async({params}: {params: {slug: string}}) => {
+    const { slug } = params
+    const post = await getData(slug)
 
     return (
         <div className={styles.container}>

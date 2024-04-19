@@ -3,7 +3,7 @@ export interface TPost {
     userId: string;
     title?: string | null;
     desc?: string | null;
-    slug?: string;
+    slug?: string | null;
     img?: string | null;
     createdAt?: Date;
 }
