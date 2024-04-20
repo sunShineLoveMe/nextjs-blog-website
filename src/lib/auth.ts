@@ -5,16 +5,17 @@ import { connectToDb } from "./utils"
 import { User } from "./models"
 import { TUser } from "@/types/collections"
 import bcrypt from "bcrypt"
+// import { CredentialsInputs } from "@/types/credentials"
 
 export interface CredentialsProps {
     username: string;
     password: string;
 }
 
-const login = async(credentials: CredentialsProps): Promise<TUser | {error: string}> => {  
+const login = async(credentials: CredentialsProps) => {  
     try {
         connectToDb()
-        const user = await User.findOne({ username: credentials.username }) as TUser;
+        const user = await User.findOne({ username: credentials.username });
 
         if(!user) {
             throw new Error("Wrong credentials")
@@ -25,7 +26,6 @@ const login = async(credentials: CredentialsProps): Promise<TUser | {error: stri
         if(!isPasswordCorrect) {
             throw new Error("Wrong credentials")
         }
-
         return user;
     } catch (error) {
         console.log(error)
@@ -40,7 +40,7 @@ export const { handlers: { GET, POST }, auth, signIn, signOut } = NextAuth({
             clientSecret: process.env.GITHUB_SECRET
         }),
         CredentialsProvider({
-            async authorize(credentials: CredentialsProps) {
+            async authorize(credentials: any) {
                 try {
                     const user = await login(credentials)
                     return user
