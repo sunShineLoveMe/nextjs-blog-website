@@ -25,7 +25,6 @@ export const authConfig: NextAuthConfig = {
         },
 
         authorized: ({ auth, request }) => {
-            // return false
             const user = auth?.user
             const isOnAdminPanel = request.nextUrl?.pathname.startsWith("/admin")
             const isOnBlogPanel = request.nextUrl?.pathname.startsWith("/blog")
