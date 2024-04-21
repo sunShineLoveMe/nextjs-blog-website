@@ -20,6 +20,26 @@ export const addPost = async(formData: FormData) => {
         await newPost.save(newPost);
         console.log("saved to DB")
         revalidatePath("/blog")
+        revalidatePath("/admin")
+    } catch (error) {
+        console.log(error)
+        return { error: "Something went wrong!"}
+    }
+}
+
+export const addUser = async(formData: FormData) => {
+    const { username, email, password, img } = Object.fromEntries(formData);
+    try {
+        connectToDb()
+        const newUser = new User({
+            username,
+            email,
+            password,
+            img
+        })
+        await newUser.save(newUser);
+        console.log("saved to DB")
+        revalidatePath("/admin")
     } catch (error) {
         console.log(error)
         return { error: "Something went wrong!"}
@@ -34,6 +54,22 @@ export const deletePost = async(formData: FormData) => {
         await Post.findByIdAndDelete(id)
         console.log("deleted from DB")
         revalidatePath("/blog")
+        revalidatePath("/admin")
+    } catch (error) {
+        console.log(error)
+        return { error: "Something went wrong!"}
+    }
+}
+
+export const deleteUser = async(formData: FormData) => {
+    const { id } = Object.fromEntries(formData);
+    try {
+        connectToDb()
+        
+        await Post.deleteMany({userId: id})
+        await User.findByIdAndDelete(id)
+        // console.log("deleted from DB")
+        revalidatePath("/admin")
     } catch (error) {
         console.log(error)
         return { error: "Something went wrong!"}
