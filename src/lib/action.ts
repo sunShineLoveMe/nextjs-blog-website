@@ -6,7 +6,6 @@ import { revalidatePath } from "next/cache";
 import { signIn, signOut } from "./auth";
 import { User } from "./models";
 import bcrypt from "bcrypt";
-import { error } from "console";
 
 export const addPost = async(formData: FormData) => {
     const { title, desc, slug, userId } = Object.fromEntries(formData);
@@ -51,7 +50,17 @@ export const handleLogout = async() => {
     await signOut()
 }
 
-export const register = async(formData: FormData) => {
+type validateRegisterStatusType = {
+    error?: string;
+    success?: boolean;
+}
+
+type validateLoginType = {
+    error?: string;
+    success?: boolean;
+}
+
+export const register = async(previousState: validateRegisterStatusType, formData: FormData) => {
     const { username, email, password, img, passwordRepeat } =
          Object.fromEntries(formData);
 
@@ -87,7 +96,7 @@ export const register = async(formData: FormData) => {
     }
 }
 
-export const login = async(formData: FormData) => {
+export const login = async(previousState: validateLoginType, formData: FormData) => {
     const { username, password } = Object.fromEntries(formData)
 
     try {
@@ -95,9 +104,14 @@ export const login = async(formData: FormData) => {
             username,
             password
         })
-    } catch (error) {
-        console.log(error)
-        return { error: "Something went wrong!"}
+        return { success: true }
+    } catch (error: any) {
+        // console.log(error)
+        if(error.message.includes("Wrong credentials")) {
+            return { error: "Invalid username or password"}
+        }
+        // return { error: "Something went wrong!"}
+        throw error
     }
 }
 
