@@ -79,7 +79,8 @@ export const register = async(formData: FormData) => {
         })
 
         await newUser.save()
-        console.log("saved to Db")
+        // console.log("saved to Db")
+        return { success: true }
     } catch (error) {
         console.log(error)
         return { error: "Something went wrong!"}
