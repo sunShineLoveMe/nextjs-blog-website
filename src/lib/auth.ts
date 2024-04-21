@@ -5,6 +5,7 @@ import { connectToDb } from "./utils"
 import { User } from "./models"
 import { TUser } from "@/types/collections"
 import bcrypt from "bcrypt"
+import { authConfig } from "./auth.config"
 // import { CredentialsInputs } from "@/types/credentials"
 
 export interface CredentialsProps {
@@ -34,6 +35,7 @@ const login = async(credentials: CredentialsProps) => {
 }
 
 export const { handlers: { GET, POST }, auth, signIn, signOut } = NextAuth({
+    ...authConfig,
     providers: [
         GitHub({
             clientId: process.env.GITHUB_ID,
@@ -73,5 +75,6 @@ export const { handlers: { GET, POST }, auth, signIn, signOut } = NextAuth({
             }
             return true
         },
+        ...authConfig.callbacks
     }
 })
