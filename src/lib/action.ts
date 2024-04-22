@@ -7,7 +7,10 @@ import { signIn, signOut } from "./auth";
 import { User } from "./models";
 import bcrypt from "bcrypt";
 
-export const addPost = async(formData: FormData) => {
+interface validateAddPostType {
+    error?: string | undefined;
+}
+export const addPost = async(previousState: validateAddPostType, formData: FormData) => {
     const { title, desc, slug, userId } = Object.fromEntries(formData);
     try {
         connectToDb()
@@ -21,6 +24,7 @@ export const addPost = async(formData: FormData) => {
         console.log("saved to DB")
         revalidatePath("/blog")
         revalidatePath("/admin")
+        return { success: true }
     } catch (error) {
         console.log(error)
         return { error: "Something went wrong!"}
