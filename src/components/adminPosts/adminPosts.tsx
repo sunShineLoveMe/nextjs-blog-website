@@ -7,13 +7,13 @@ const AdminPosts = async() => {
     const posts = await getPosts()
 
     return (
-        <div className={styles.container}>
+        <div>
             <h1>Posts</h1>
             { posts?.map((post) => (
                 <div className={styles.post} key={post.id}>
                     <div className={styles.detail}>
                         <Image src={post.img || "/noavatar.png"}  alt="" width={50} height={50} />
-                        <span className={styles.postTitle}>{post.title}</span>
+                        <span>{post.title}</span>
                     </div>
                     <form action={deletePost}>
                         <input type="hidden" name="id" value={post.id} />
