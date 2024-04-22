@@ -9,6 +9,7 @@ import bcrypt from "bcrypt";
 
 interface validateAddPostType {
     error?: string | undefined;
+    success?: boolean;
 }
 export const addPost = async(previousState: validateAddPostType, formData: FormData) => {
     const { title, desc, slug, userId } = Object.fromEntries(formData);
@@ -31,7 +32,13 @@ export const addPost = async(previousState: validateAddPostType, formData: FormD
     }
 }
 
-export const addUser = async(formData: FormData) => {
+
+interface validateAddUserType {
+    error?: string | undefined;
+    success?: boolean;
+}
+
+export const addUser = async(previousState: validateAddUserType, formData: FormData) => {
     const { username, email, password, img } = Object.fromEntries(formData);
     try {
         connectToDb()
@@ -44,6 +51,7 @@ export const addUser = async(formData: FormData) => {
         await newUser.save(newUser);
         console.log("saved to DB")
         revalidatePath("/admin")
+        return { success: true }
     } catch (error) {
         console.log(error)
         return { error: "Something went wrong!"}

@@ -7,10 +7,10 @@ const AdminUsers = async() => {
     const users = await getUsers()
     
     return (
-        <div className={styles.container}>
+        <div>
             <h1>Users</h1>
             { users?.map((user) => (
-                <div className={styles.post} key={user.id}>
+                <div className={styles.user} key={user.id}>
                     <div className={styles.detail}>
                         <Image src={user.img || "/noavatar.png"}  alt="" width={50} height={50} />
                         <span>{user.username}</span>
