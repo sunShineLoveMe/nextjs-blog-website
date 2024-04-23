@@ -33,8 +33,7 @@ const links = [
 const Links = async({session}: {session: Session}) =>{
 
     const [open, setOpen] = useState<boolean>(false)
-    // const isAdmin = true
-
+    
     return (
         <div>
             <div className={styles.links}>

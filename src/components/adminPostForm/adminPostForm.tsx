@@ -4,7 +4,11 @@ import { useFormState } from "react-dom"
 import styles from './adminPostForm.module.css';
 import { addPost } from "@/lib/action";
 
-const AdminPostForm = ({userId}: {userId: string}) => {
+interface IAdminPostFormProps {
+    userId: string
+}
+
+const AdminPostForm = ({userId}: IAdminPostFormProps) => {
 
     const [state, formAction] = useFormState(addPost, {success: false})
 
