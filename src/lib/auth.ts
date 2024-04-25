@@ -6,7 +6,6 @@ import { User } from "./models"
 import { TUser } from "@/types/collections"
 import bcrypt from "bcrypt"
 import { authConfig } from "./auth.config"
-// import { CredentialsInputs } from "@/types/credentials"
 
 export const { handlers: { GET, POST }, auth, signIn, signOut } = NextAuth({
     ...authConfig,
